@@ -9,6 +9,7 @@ import { StorageService } from '../auth/storage.service';
   templateUrl: './login.component.html',
   styleUrl: './login.component.css'
 })
+
 export class LoginComponent {
 
   form: any = {username: null, password: null}

@@ -1,23 +1,23 @@
 .navbar {
     width: 100%; /* Larghezza completa della pagina */
-    height: 60px; /* Altezza della navbar */
-    background-color: #333; /* Sfondo scuro (modificabile) */
-    display: flex; /* Usa Flexbox */
+    height: 60px; /* Altezza navbar */
+    background-color: #333; /* Sfondo */
+    display: flex; 
     justify-content: center; /* Centra orizzontalmente i bottoni */
     align-items: center; /* Centra verticalmente i bottoni */
-    position: fixed; /* Fissa la navbar in alto */
+    position: fixed; /* Fissa navbar in alto */
     top: 0;
     left: 0;
 }
   
 .nav-buttons {
-    display: flex; /* Flexbox per i bottoni */
+    display: flex;
     gap: 20px; /* Distanza tra i bottoni */
 }
   
 button {
     background-color: #fff;
-    color: #333; /* Testo scuro */
+    color: #333; /* Testo */
     border: none;
     padding: 10px 20px;
     font-size: 16px;
