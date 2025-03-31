@@ -1,0 +1,18 @@
+<div class="home-wrapper">
+    <div class="home-component">
+        <h2>Anagrafica</h2>
+        <div ngIf="user; else loading">
+            <p>Visualizzazione Anagrafica</p>
+        </div>
+
+        <ng-template #loading>
+            <div>
+                <p><strong>Username</strong>{{ user.username }}</p>
+                <p><strong>Nome</strong>{{ user.nome }}</p>
+                <p><strong>Cognome</strong>{{ user.cognome }}</p>
+                <p><strong>email</strong>{{ user.email }}</p>
+                <button (click)="clearUserHome()"> Torna alla Home</button>
+            </div>
+        </ng-template>
+    </div>
+</div>

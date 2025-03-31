@@ -22,7 +22,6 @@ public class ApplicationConfig {
     private final UserDao userDao;
 
 
-                //  DA VERIFICARE IL CORRETTO FUNZIONAMENTO  //
     @Bean
     public UserDetailsService userDetailsService ()  {
         return username -> userDao.findByUsername(username).orElseThrow(()-> new UsernameNotFoundException("User not found"));

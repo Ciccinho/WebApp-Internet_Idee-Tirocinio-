@@ -1,0 +1,42 @@
+.navbar {
+  display: flex;
+  justify-content: space-around;
+  background-color: #007bff;
+  padding: 10px;
+}
+  
+.navbar a {
+  color: white;
+  text-decoration: none;
+  font-size: 18px;
+}
+  
+.navbar a.active {
+  font-weight: bold;
+  text-decoration: underline;
+}
+
+.home-wrapper {
+  font-family: Arial, sans-serif;
+  background-color: #f7f7f7;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh; /*altezza dello schermo */
+  margin: 0;
+}
+
+.home-component {
+  width: 50%; /* larghezza adeguata */
+  background: white;
+  padding: 30px;
+  border-radius: 10px;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); 
+  text-align: center; /* Centra il testo */
+  transform: translateY(-100px); /* con valori negativi sposta il componente più in alto rispetto al centro */
+  }
+
+h2 {
+  text-align: center;
+  color: #007bff;
+}

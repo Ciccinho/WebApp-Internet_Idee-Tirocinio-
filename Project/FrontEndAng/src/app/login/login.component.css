@@ -1,63 +1,63 @@
-/* login.component.css */
 .login-wrapper {
-    font-family: Arial, sans-serif;
-    background-color: #f7f7f7;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh; /* Garantisce che la pagina copra l'intera altezza dello schermo */
-    margin: 0;
-  }
+  font-family: Arial, sans-serif;
+  background-color: #f7f7f7;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh; /*altezza dello schermo */
+  margin: 0;
+}
   
-  .login-component {
-    background-color: white;
-    padding: 30px;
-    border-radius: 10px;
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
-    width: 100%;
-    max-width: 400px; /* Imposta una larghezza massima per il form */
-    box-sizing: border-box; /* Per evitare problemi di padding */
-  }
+.login-component {
+  background-color: white;
+  padding: 30px;
+  border-radius: 10px;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 400px; /*larghezza massima per il form */
+  box-sizing: border-box; /* evita problemi di padding */
+  transform: translateY(-50px); /* con valori negativi sposta il componente più in alto rispetto al centro */
   
-  h2 {
-    text-align: center;
-    margin-bottom: 20px;
-    color: #4CAF50;
-  }
+}
   
-  .form-group {
-    margin-bottom: 15px;
-  }
+h2 {
+  text-align: center;
+  margin-bottom: 20px;
+  color: #4CAF50;
+}
+
+.form-group {
+  margin-bottom: 15px;
+}
   
-  label {
-    font-size: 14px;
-    color: #333;
-  }
+label {
+  font-size: 14px;
+  color: #333;
+}
   
-  input[type="text"], input[type="password"] {
-    width: 100%; /* Imposta la larghezza al 100% */
-    padding: 10px;
-    margin-top: 5px;
-    border-radius: 5px;
-    border: 1px solid #ddd;
-    font-size: 14px;
-    box-sizing: border-box; /* Includi padding e bordi nella larghezza totale */
-  }
+input[type="text"], input[type="password"] {
+  width: 100%; /* Imposta la larghezza al 100% */
+  padding: 10px;
+  margin-top: 5px;
+  border-radius: 5px;
+  border: 1px solid #ddd;
+  font-size: 14px;
+  box-sizing: border-box; 
+}
   
-  button {
-    width: 100%; /* Imposta la larghezza al 100% */
-    padding: 10px;
-    background-color: #4CAF50;
-    border: none;
-    border-radius: 5px;
-    color: white;
-    font-size: 16px;
-    cursor: pointer;
-    transition: background-color 0.3s;
-    box-sizing: border-box; /* Garantisce che il padding non modifichi la larghezza del bottone */
-  }
+button {
+  width: 100%; /*larghezza */
+  padding: 10px;
+  background-color: #4CAF50;
+  border: none;
+  border-radius: 5px;
+  color: white;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  box-sizing: border-box; 
+}
   
-  button:hover {
-    background-color: #45a049;
-  }
-  
+button:hover {
+  background-color: #45a049;
+}

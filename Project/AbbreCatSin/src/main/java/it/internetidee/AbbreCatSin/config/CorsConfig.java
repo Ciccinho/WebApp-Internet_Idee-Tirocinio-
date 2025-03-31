@@ -13,12 +13,12 @@ public class CorsConfig implements WebMvcConfigurer {
 
     @Override
     public void addCorsMappings(@NonNull CorsRegistry registry) {
-        registry.addMapping("/api/**")
-            .allowedOrigins("http://localhost:4200")
-            .allowedMethods("GET", "POST", "PUT", "DELETE")
-            .allowedHeaders("Authorization", "Content-type")
-            .allowCredentials(true)
-            .maxAge(3600);
+        registry.addMapping("/api/**")                          //rotte dove consentire il CORS
+            .allowedOrigins("http://localhost:4200")             //dominio a cui è permesso effettuare richieste
+            .allowedMethods("GET", "POST", "PUT", "DELETE")      //metodi consentiti    
+            .allowedHeaders("Authorization", "Content-type")     //headers consentiti   
+            .allowCredentials(true)                        //consente di inviare le credenziali come cookie 
+            .maxAge(3600);                                           //tempo di risposta cache 
     }
 
 }

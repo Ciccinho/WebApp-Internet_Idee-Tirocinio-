@@ -10,6 +10,7 @@ import java.time.LocalDate;
 @Entity
 @Table(name = "anagrafica")
 public class Anagrafica {
+    
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_anagrafica")

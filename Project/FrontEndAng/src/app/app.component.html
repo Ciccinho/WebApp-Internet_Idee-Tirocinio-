@@ -1,4 +1,9 @@
-
-<router-outlet />
-
-<app-login></app-login>
+<nav class="navbar">
+    <div class="nav-buttons">
+        <button (click)="navigateHome()">Home</button>
+        <button (click)="navigateLogin()">Login</button>
+    </div>
+</nav>
+<div class="container">
+    <router-outlet></router-outlet>
+</div>
