@@ -28,12 +28,29 @@ public class AuthService {
     private final JwtService jwtService;
 
                                
-    public AuthResponse authentication(AuthRequest request) throws CredentialException {                 // LOGIN //
+    public AuthResponse authentication(AuthRequest request) throws CredentialException {                 // LOGIN senza BCrypt //
         try{
             authManager.authenticate(new UsernamePasswordAuthenticationToken(request.getUsername(), request.getPassword()));
-            var user = userDao.findById(request.getId()).orElseThrow(()-> new UsernameNotFoundException("Username not foud"));
+            var user = userDao.findByUsername(request.getUsername()).orElseThrow(()-> new UsernameNotFoundException("Username not found"));
             var userPassCod = user.getPassword();
-            if(passwordEncode.matches(request.getPassword(), userPassCod)){
+            if(request.getPassword().equals(userPassCod)){
+                var jwtToken = jwtService.generateToken((UserDetails) user);
+                return AuthResponse.builder().token(jwtToken).build();
+            } else {
+                throw new CredentialException("Token expired or invalid");
+            }
+        } catch (BadCredentialsException e) {
+            throw new CredentialException("Incorrect credenzial");
+        }
+    }
+
+    public AuthResponse authenticationCryp(AuthRequest request) throws CredentialException {                 // LOGIN con BCrypt//
+        try{
+            authManager.authenticate(new UsernamePasswordAuthenticationToken(request.getUsername(), request.getPassword()));
+            var user = userDao.findById(request.getId()).orElseThrow(()-> new UsernameNotFoundException("Username not found"));
+            var userPassCod = user.getPassword();
+            //var passEncoded = encodePassword(request.getPassword());
+            if(passwordEncode.matches(request.getPassword() /* passEncoded */, userPassCod)){
                 var jwtToken = jwtService.generateToken((UserDetails) user);
                 return AuthResponse.builder().token(jwtToken).build();
             } else {

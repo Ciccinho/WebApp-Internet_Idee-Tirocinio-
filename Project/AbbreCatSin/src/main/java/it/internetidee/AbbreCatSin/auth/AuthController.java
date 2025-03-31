@@ -34,6 +34,17 @@ public class AuthController {
         }
     }
 
+    @PostMapping("/loginCrypt")             //chiamata con BCrypt
+    public ResponseEntity<Object> loginCrypt(@RequestBody AuthRequest request ) throws Exception {
+        try{
+            return new ResponseEntity<Object>(service.authenticationCryp(request), HttpStatus.ACCEPTED);
+        } catch (CredenzialException e){
+            return new ResponseEntity<Object>(e.getClass(), HttpStatus.UNAUTHORIZED);
+        } catch (Exception e) {
+            return new ResponseEntity<Object>(e.toString(), HttpStatus.BAD_REQUEST);
+        }
+    }
+
     @PostMapping("/logout")
     public ResponseEntity<Object> logout(@RequestBody AuthRequest request) throws Exception {
         try{

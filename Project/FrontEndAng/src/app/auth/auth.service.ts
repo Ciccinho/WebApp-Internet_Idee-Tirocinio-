@@ -2,7 +2,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
-const urlAuth = '';   //indirizzo del server
+const urlAuth = 'http://localhost:8080/api/auth/';   //indirizzo del server
 const httpContent = {headers: new HttpHeaders ({'Content-Type': 'application/json'})} //generalizzazione per includere i file json nella trasmissione http
 
 @Injectable({
@@ -15,7 +15,7 @@ export class AuthService {
   constructor( private  http: HttpClient) { }
 
   login (username: string, password: string): Observable <any>{
-    return this.http.post(urlAuth +'', {username, password}, httpContent);
+    return this.http.post(urlAuth +'login', {username, password}, httpContent);
   }
 
   getUser (): Observable <any>{
