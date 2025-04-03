@@ -14,7 +14,7 @@ import { HomeComponent } from './home/home.component';
       multi: true
     }
   ],
-  imports: [RouterOutlet, LoginComponent, HomeComponent],
+  imports: [RouterOutlet],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
@@ -25,7 +25,7 @@ export class AppComponent {
   constructor (private router: Router) {}
 
   navigateHome () {
-    this.router.navigate(['/']);
+    this.router.navigate(['/home']);
   }
 
   navigateLogin () {

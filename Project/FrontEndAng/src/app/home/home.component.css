@@ -27,14 +27,15 @@
 }
 
 .home-component {
-  width: 50%; /* larghezza */
   background: white;
   padding: 30px;
   border-radius: 10px;
-  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); 
+  box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.1);
+  width: 100%; /* larghezza */ 
+  max-width: 400px;
   text-align: center; /* Centra il testo */
-  transform: translateY(-100px); /* con valori negativi sposta il componente più in alto rispetto al centro */
-  }
+  transform: translateY(-50px); /* con valori negativi sposta il componente più in alto rispetto al centro */
+}
 
 h2 {
   text-align: center;

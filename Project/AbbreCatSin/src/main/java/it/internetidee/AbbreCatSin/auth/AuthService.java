@@ -11,10 +11,12 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import io.jsonwebtoken.ExpiredJwtException;
 import it.internetidee.AbbreCatSin.auth.auth_entity.AuthRequest;
 import it.internetidee.AbbreCatSin.auth.auth_entity.AuthResponse;
 import it.internetidee.AbbreCatSin.config.JwtService;
 import it.internetidee.AbbreCatSin.dao.UserDao;
+import it.internetidee.AbbreCatSin.entity.User;
 import lombok.RequiredArgsConstructor;
 
 @Service
@@ -37,7 +39,7 @@ public class AuthService {
                 var jwtToken = jwtService.generateToken((UserDetails) user);
                 return AuthResponse.builder().token(jwtToken).build();
             } else {
-                throw new CredentialException("Token expired or invalid");
+                throw new ExpiredJwtException(null, null, "Token expired or invalid");
             }
         } catch (BadCredentialsException e) {
             throw new CredentialException("Incorrect credenzial");
@@ -49,8 +51,7 @@ public class AuthService {
             authManager.authenticate(new UsernamePasswordAuthenticationToken(request.getUsername(), request.getPassword()));
             var user = userDao.findById(request.getId()).orElseThrow(()-> new UsernameNotFoundException("Username not found"));
             var userPassCod = user.getPassword();
-            //var passEncoded = encodePassword(request.getPassword());
-            if(passwordEncode.matches(request.getPassword() /* passEncoded */, userPassCod)){
+            if(passwordEncode.matches(request.getPassword(), userPassCod)){
                 var jwtToken = jwtService.generateToken((UserDetails) user);
                 return AuthResponse.builder().token(jwtToken).build();
             } else {
@@ -70,5 +71,10 @@ public class AuthService {
         } catch (BadCredentialsException e) {
             throw new CredentialException("Error");
         }
+    }
+
+    public User getUsername(String username, String token) {
+        User user =  userDao.findByUsername(username).orElseThrow(()-> new UsernameNotFoundException("Username not found"));
+        return user;
     }
 }

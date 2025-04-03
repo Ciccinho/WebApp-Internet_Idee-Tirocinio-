@@ -1,5 +1,7 @@
 package it.internetidee.AbbreCatSin.config;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -9,6 +11,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.cors.CorsConfiguration;
 
 import lombok.RequiredArgsConstructor;
 
@@ -22,11 +25,21 @@ public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain securityFilterChain (HttpSecurity http) throws Exception {
-        http.csrf(cors -> cors.disable())
-            .sessionManagement(sessionManagement -> sessionManagement.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+        http
+            .csrf(csrf -> csrf.disable())
+            .cors(cors -> cors.configurationSource(request->{                                                        //configurazione CORS
+                CorsConfiguration configuration = new CorsConfiguration();
+                configuration.addAllowedOrigin("http://localhost:4200");                                      //origine abilitazione richieste
+                configuration.setAllowedMethods(List.of("GET","POST","PUT", "DELETE", "OPTION"));     //richieste permesse
+                configuration.setAllowedHeaders(List.of("Authorization", "Content-Type"));
+                configuration.setAllowCredentials(true);
+                return configuration;
+            }))
+            .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
             .authorizeHttpRequests(authorizeRequest -> authorizeRequest
-                .requestMatchers(HttpMethod.POST, "/api/auth/login/**").permitAll()
+                .requestMatchers(HttpMethod.POST, "/api/auth/login/**").permitAll()         //percorsi abilitati per le richieste
                 .requestMatchers(HttpMethod.POST, "/api/auth/logout/**").authenticated()
+                .requestMatchers(HttpMethod.GET, "/api/auth/getUsername/**").authenticated()
                 .anyRequest().denyAll()).addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
         return http.build();
     }

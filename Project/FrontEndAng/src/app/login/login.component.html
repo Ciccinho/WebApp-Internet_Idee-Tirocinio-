@@ -1,19 +1,46 @@
 <div class="login-wrapper">
     <div class= "login-component">
         <h2> Login</h2>
-        <form (ngSubmit)="onSubmit()" #loginForm="ngForm">
+        <form *ngIf="!isLog" (ngSubmit)="onSubmit()" #loginForm="ngForm" novalidate>
             <div class="form-group">
                 <label for="username">Username </label>
-                <input type="text" id="username" name="username" class="form-control" [(ngModel)]="form.username" required #username="ngModel"/>
+                <input type="text" id="username" name="username" class="form-control" [(ngModel)]="form.username" required />
             </div>
 
             <div class="form-group">
                 <label for="password">Password </label>
-                <input type="password" id="password" name="password" class="form-control" [(ngModel)]="form.password" required #password="ngModel" />
+                <input type="password" name="password" class="form-control" [(ngModel)]="form.password" required #password="ngModel" />
             </div>
-
-            <button type="submit" class="btn btn-primary" >Login </button>
-
+            
+            <button type="submit" class="btn btn-primary btn-block">Login </button>
+            <div class="form-group">
+                <div *ngIf="loginForm.submitted && isFailledLog" class="alert alert-danger"> 
+                    Login failed {{ errorMess}}
+                </div>
+            </div>
         </form>
+
+        <div class="alert alert-success" *ngIf="isLog">
+            Logged User: {{username}}
+            <p><button type="submit" class="btn btn-primary btn-block" (click)="showPopup=true" >Visualizza Anagrafica</button></p>
+            <p><button type="submit" class="btn btn-primary btn-block" (click)="logout()" >Logout </button><p>
+        </div>
+    </div>
+</div>
+
+<div class="modal" *ngIf="showPopup">
+    <div class="modal-content">
+        <span class="close" (click)="closePopup()">&times;</span>
+        <h2>Anagrafica Utente</h2>
+        <p><strong>Username </strong>{{ anagrafica.nominativo }}</p>
+        <p><strong>Persona fisica </strong>{{ anagrafica.persona_fisica }}</p>
+        <p><strong>CF </strong>{{ anagrafica.codice_fiscale }}</p>
+        <p><strong>P.IVA </strong>{{ anagrafica.partita_iva }}</p>
+        <p><strong>Data nascita</strong>{{ anagrafica.data_nascita }}</p>
+        <p><strong>Luogo nascita </strong>{{ anagrafica.luogo_nascita }}</p>
+        <p><strong>Sesso </strong>{{ anagrafica.sesso }}</p>
+        <p><strong>Comune di nascita </strong>{{ anagrafica.comune_nascita }}</p>
+        <p><strong>Nome </strong>{{ anagrafica.nome }}</p>
+        <p><strong>Cognome</strong>{{ anagrafica.cognome }}</p>
     </div>
 </div>

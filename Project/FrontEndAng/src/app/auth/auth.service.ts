@@ -5,6 +5,7 @@ import { Observable } from 'rxjs';
 const urlAuth = 'http://localhost:8080/api/auth/';   //indirizzo del server
 const httpContent = {headers: new HttpHeaders ({'Content-Type': 'application/json'})} //generalizzazione per includere i file json nella trasmissione http
 
+
 @Injectable({
   providedIn: 'root'
 })
@@ -12,14 +13,15 @@ const httpContent = {headers: new HttpHeaders ({'Content-Type': 'application/jso
 export class AuthService {
   
 
-  constructor( private  http: HttpClient) { }
+  constructor (private  http: HttpClient) { }
 
   login (username: string, password: string): Observable <any>{
     return this.http.post(urlAuth +'login', {username, password}, httpContent);
   }
 
-  getUser (): Observable <any>{
-    return this.http.get<any>(urlAuth);
+  getUser (username: string, token: string): Observable <any>{
+    const header = new HttpHeaders ({'Content-Type': 'application/json', 'Authorization': `Bearer ${token}`});
+    return this.http.get(urlAuth + 'getUsername/'+`${username}`, { headers: header });
   }
 
 }
