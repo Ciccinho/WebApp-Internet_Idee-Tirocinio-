@@ -1,15 +1,18 @@
 <div class="home-wrapper">
     <div class="home-component" ngIF="anagrafica">
         <h2>Anagrafica</h2>
-        <p><strong>Username </strong>{{ anagrafica.nominativo }}</p>
-        <p><strong>Persona fisica </strong>{{ anagrafica.persona_fisica }}</p>
-        <p><strong>CF </strong>{{ anagrafica.codice_fiscale }}</p>
-        <p><strong>P.IVA </strong>{{ anagrafica.partita_iva }}</p>
-        <p><strong>Data nascita</strong>{{ anagrafica.data_nascita }}</p>
-        <p><strong>Luogo nascita </strong>{{ anagrafica.luogo_nascita }}</p>
-        <p><strong>Sesso </strong>{{ anagrafica.sesso }}</p>
-        <p><strong>Comune di nascita </strong>{{ anagrafica.comune_nascita }}</p>
-        <p><strong>Nome </strong>{{ anagrafica.nome }}</p>
-        <p><strong>Cognome</strong>{{ anagrafica.cognome }}</p>
+        <p><strong>Username </strong>{{ anagrafica?.nominativo }}</p>
+        <p><strong>Persona fisica </strong>{{ anagrafica?.persona_fisica }}</p>
+        <p><strong>CF </strong>{{ anagrafica?.codice_fiscale }}</p>
+        <p><strong>P.IVA </strong>{{ anagrafica?.partita_iva }}</p>
+        <p><strong>Data nascita</strong>{{ anagrafica?.data_nascita }}</p>
+        <p><strong>Luogo nascita </strong>{{ anagrafica?.luogo_nascita }}</p>
+        <p><strong>Sesso </strong>{{ anagrafica?.sesso }}</p>
+        <p><strong>Comune di nascita </strong>{{ anagrafica?.comune_nascita }}</p>
+        <p><strong>Nome </strong>{{ anagrafica?.nome }}</p>
+        <p><strong>Cognome</strong>{{ anagrafica?.cognome }}</p>
     </div>
 </div>
+<ng-template #loading>
+    <p>Caricamento dati...</p>
+  </ng-template>

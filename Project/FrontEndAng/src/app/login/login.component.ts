@@ -21,7 +21,7 @@ export class LoginComponent implements OnInit {
   isLog = false;
   isFailledLog = false;
   errorMess: string = '';
-  anagrafica: any = null;
+  anagrafica: any;
   showPopup = false;
   
 
@@ -34,7 +34,7 @@ export class LoginComponent implements OnInit {
     }
   }
 
-  onSubmit(): void {
+  login(): void {
     const {username, password} = this.form;
     this.username = username;
     this.password = password;
@@ -46,16 +46,7 @@ export class LoginComponent implements OnInit {
         console.log('password:', this.password);
         this.isFailledLog = false;
         this.isLog = true;
-
-        this.authService.getUser(this.username, data.token).subscribe({
-          next: userData => {
-            this.anagrafica = userData;
-            this.showPopup = true;        //Mostra il popup dopo il login
-          },
-          error: err => {
-            console.error('Errore recupero anagrafica', err);
-          }
-        });
+        this.showPopup = true;              //Mostra il popup dopo il login
       },
       error: err => {
         this.errorMess = err.message;

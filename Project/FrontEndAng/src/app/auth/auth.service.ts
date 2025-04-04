@@ -24,4 +24,8 @@ export class AuthService {
     return this.http.get(urlAuth + 'getUsername/'+`${username}`, { headers: header });
   }
 
+  getAnagraficaUser(username: string, token: string): Observable<any>{
+    const header = new HttpHeaders({'Content-Type':'application/json', 'Authorization':`Bearer ${token}`});
+    return this.http.get(urlAuth+'getAnagrafica/', { headers: header, params: {username}});
+  }
 }

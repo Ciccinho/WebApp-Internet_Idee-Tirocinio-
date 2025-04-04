@@ -34,13 +34,13 @@ public class SecurityConfig {
                 configuration.setAllowedHeaders(List.of("Authorization", "Content-Type"));
                 configuration.setAllowCredentials(true);
                 return configuration;
-            }))
+            })).addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class)
             .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
             .authorizeHttpRequests(authorizeRequest -> authorizeRequest
-                .requestMatchers(HttpMethod.POST, "/api/auth/login/**").permitAll()         //percorsi abilitati per le richieste
+                .requestMatchers(HttpMethod.POST, "/api/auth/login").permitAll()         //percorsi abilitati per le richieste
                 .requestMatchers(HttpMethod.POST, "/api/auth/logout/**").authenticated()
-                .requestMatchers(HttpMethod.GET, "/api/auth/getUsername/**").authenticated()
-                .anyRequest().denyAll()).addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
+                .requestMatchers(HttpMethod.GET, "/api/auth/getAnagrafica/**").permitAll()
+                .anyRequest().denyAll());
         return http.build();
     }
 }

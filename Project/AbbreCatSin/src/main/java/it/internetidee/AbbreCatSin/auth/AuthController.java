@@ -15,11 +15,13 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestParam;
+
 
 
 
 @RestController
-@CrossOrigin(origins = "http://localhost:4200")
+@CrossOrigin(origins = "http://localhost:4200", allowCredentials = "true")
 @RequestMapping("/api/auth")   
 @RequiredArgsConstructor
 public class AuthController {
@@ -65,6 +67,15 @@ public class AuthController {
         } catch (Exception e) {
             return new ResponseEntity<Object>(e.getClass(), HttpStatus.BAD_REQUEST);
         }
+    }
+
+    @GetMapping("/getAnagrafica/")
+    public ResponseEntity<Object>getAnagra(@RequestHeader("Authorization") String token, @RequestParam String username) throws Exception{
+      try{ 
+        return new ResponseEntity<Object>(service.getAnagrafica(username, token), HttpStatus.ACCEPTED);
+      } catch (Exception e) {
+        return new ResponseEntity<Object>(e.getClass(), HttpStatus.BAD_REQUEST);
+      }
     }
     
 }
