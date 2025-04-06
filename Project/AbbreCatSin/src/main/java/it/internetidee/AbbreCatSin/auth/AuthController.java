@@ -8,6 +8,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import it.internetidee.AbbreCatSin.auth.auth_entity.AuthRequest;
+import it.internetidee.AbbreCatSin.config.JwtService;
+import it.internetidee.AbbreCatSin.entity.Anagrafica;
 import it.internetidee.AbbreCatSin.error.CredenzialException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -28,6 +30,7 @@ public class AuthController {
 
     @Autowired
     private final AuthService service;
+    
 
     @PostMapping("/login")
     public ResponseEntity<Object> login(@RequestBody AuthRequest request ) throws Exception {
@@ -69,10 +72,10 @@ public class AuthController {
         }
     }
 
-    @GetMapping("/getAnagrafica/")
-    public ResponseEntity<Object>getAnagra(@RequestHeader("Authorization") String token, @RequestParam String username) throws Exception{
+    @GetMapping("/getAnagrafica")
+    public ResponseEntity<Object>getAnagra(@RequestHeader("Authorization") String token) throws Exception{
       try{ 
-        return new ResponseEntity<Object>(service.getAnagrafica(username, token), HttpStatus.ACCEPTED);
+        return new ResponseEntity<Object>(service.getAnagrafica(token), HttpStatus.ACCEPTED);
       } catch (Exception e) {
         return new ResponseEntity<Object>(e.getClass(), HttpStatus.BAD_REQUEST);
       }

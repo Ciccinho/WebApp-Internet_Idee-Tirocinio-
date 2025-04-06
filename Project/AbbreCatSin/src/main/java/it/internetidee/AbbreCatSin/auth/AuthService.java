@@ -83,8 +83,11 @@ public class AuthService {
         return user;
     }
 
-    public Anagrafica getAnagrafica(String username, String token) throws Exception {
+    public Anagrafica getAnagrafica(String token) throws Exception {
        try {
+            if(token.startsWith("Bearer "))
+                token = token.substring(7);
+            String username = jwtService.extractUsername(token);
             User user = userDao.findByUsername(username).orElseThrow(()-> new UsernameNotFoundException("Username not found"));
             Anagrafica anagrafica = anagraficaDao.findById((user.getAnagrafica().getId())).orElseThrow(()-> new NameNotFoundException("Anagrafica not found"));
             return anagrafica;

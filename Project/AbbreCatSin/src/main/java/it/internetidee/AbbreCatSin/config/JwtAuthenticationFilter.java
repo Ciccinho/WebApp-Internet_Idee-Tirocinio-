@@ -43,8 +43,6 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                 }
             }
         }
-        if(freehHeader != null)
-            filterChain.doFilter(request, response);
         filterChain.doFilter(request, response);
     }
 

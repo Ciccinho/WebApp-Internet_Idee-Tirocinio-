@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../auth/auth.service';
 import { CommonModule } from '@angular/common';
 import { StorageService } from '../auth/storage.service';
+import { AnagraficaComponent } from '../entity/anagrafica/anagrafica.component';
 
 @Component({
   selector: 'app-home',
@@ -14,15 +15,14 @@ export class HomeComponent implements OnInit{
 
   user: string = '';
   token: string ='';
-  anagrafica: any;
+  anagrafica: AnagraficaComponent = new AnagraficaComponent;
 
   constructor(private authService: AuthService, private store: StorageService, ) {}
   
   ngOnInit(): void {
     if(this.store.isLogged()){
-      this.user = this.store.getUsername();
       this.token = this.store.getAuth();
-      this.authService.getAnagraficaUser(this.user, this.token).subscribe({
+      this.authService.getAnagraficaUser(this.token).subscribe({
         next: (data)=> this.anagrafica = data,
         error: (error) => console.error("Errore caricamento Utente", error)
       });
