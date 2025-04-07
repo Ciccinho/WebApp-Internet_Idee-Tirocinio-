@@ -1,5 +1,9 @@
 <div class="home-wrapper">
-    <div class="home-component" ngIF="anagrafica">
+    <div *ngIf="errorMsg" class="error-message">
+        {{ errorMsg }}
+    </div>
+
+    <div class="home-component" *ngIf="anagrafica && !errorMsg">
         <h2>Anagrafica</h2>
         <p><strong>Username: </strong>{{ anagrafica.nominativo }}</p>
         <p><strong>Persona fisica: </strong>{{ anagrafica.personaFisica }}</p>
@@ -13,6 +17,3 @@
         <p><strong>Cognome: </strong>{{ anagrafica.cognome }}</p>
     </div>
 </div>
-<ng-template #loading>
-    <p>Caricamento dati...</p>
-  </ng-template>

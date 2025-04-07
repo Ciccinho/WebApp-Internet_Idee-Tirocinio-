@@ -47,6 +47,15 @@
   font-weight: 700;
 }
 
+.error-message {
+  color: #fff;
+  background-color: #e74c3c;
+  padding: 12px;
+  border-radius: 5px;
+  font-weight: bold;
+  margin: 20px 0;
+}
+
 h2 {
   text-align: center;
   color: #007bff;
