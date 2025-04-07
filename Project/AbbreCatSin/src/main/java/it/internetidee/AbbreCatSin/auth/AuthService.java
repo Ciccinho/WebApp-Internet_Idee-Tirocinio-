@@ -13,6 +13,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import io.jsonwebtoken.ExpiredJwtException;
+import it.internetidee.AbbreCatSin.auth.auth_entity.AnagraficaResponse;
 import it.internetidee.AbbreCatSin.auth.auth_entity.AuthRequest;
 import it.internetidee.AbbreCatSin.auth.auth_entity.AuthResponse;
 import it.internetidee.AbbreCatSin.config.JwtService;

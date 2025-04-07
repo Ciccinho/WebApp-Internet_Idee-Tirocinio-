@@ -72,7 +72,7 @@ public class AuthController {
         }
     }
 
-    @GetMapping("/getAnagrafica")
+    @GetMapping("/getAnagrafica/")
     public ResponseEntity<Object>getAnagra(@RequestHeader("Authorization") String token) throws Exception{
       try{ 
         return new ResponseEntity<Object>(service.getAnagrafica(token), HttpStatus.ACCEPTED);

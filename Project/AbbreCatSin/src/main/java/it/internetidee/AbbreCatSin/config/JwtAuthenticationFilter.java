@@ -28,18 +28,16 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     protected void doFilterInternal (@NonNull HttpServletRequest request, @NonNull HttpServletResponse response, @NonNull FilterChain filterChain) 
     throws ServletException, IOException {
         final String authHeader = request.getHeader("Authorization");
-        final String freehHeader = request.getHeader("username");
         if(authHeader != null && authHeader.startsWith("Bearer ")){
-            final String jwt;
-            final String username;
-            jwt = authHeader.substring(7);
-            username = jwtService.extractUsername(jwt);
+            final String jwt = authHeader.substring(7);
+            final String username = jwtService.extractUsername(jwt);
             if(username != null && SecurityContextHolder.getContext().getAuthentication() == null){
                 UserDetails userDet = this.userDetailsService.loadUserByUsername(username);
                 if(jwtService.isTokenValid(jwt, userDet)) {
                     UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(userDet, null, userDet.getAuthorities());
                     authToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
                     SecurityContextHolder.getContext().setAuthentication(authToken);
+                    System.out.println("Auth in context: " + SecurityContextHolder.getContext().getAuthentication());
                 }
             }
         }

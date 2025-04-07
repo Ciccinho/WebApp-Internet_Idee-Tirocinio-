@@ -12,7 +12,6 @@ export class AuthInterceptor implements HttpInterceptor {
   constructor(private storage: StorageService ) {}
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    request = request.clone({ withCredentials: true });
     return next.handle(request).pipe(
       catchError(
         (error) => {
@@ -41,7 +40,6 @@ export class AuthInterceptor implements HttpInterceptor {
   private eventLogout() {
     if(this.storage.isLogged()) {
       this.storage.clean();
-      window.location.reload();
     }
   }
 

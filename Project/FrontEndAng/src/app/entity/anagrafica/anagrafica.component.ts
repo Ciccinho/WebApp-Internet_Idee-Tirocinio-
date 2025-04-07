@@ -1,13 +1,13 @@
 export class AnagraficaComponent {
 
   nominativo!: string;
-  persona_fisica!: string;
-  codice_fiscale!: string;
-  partita_iva!: string;
-  data_nascita!: any;
-  luogo_nascita!: string;
+  personaFisica!: any;
+  codiceFiscale!: any;
+  partitaIva!: string;
+  dataNascita!: any;
+  luogoNascita!: string;
   sesso!: string;
-  comune_nascita!: string;
+  comuneNascita!: string;
   nome!: string;
   cognome!: string;
 

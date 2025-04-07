@@ -23,8 +23,11 @@ export class HomeComponent implements OnInit{
     if(this.store.isLogged()){
       this.token = this.store.getAuth();
       this.authService.getAnagraficaUser(this.token).subscribe({
-        next: (data)=> this.anagrafica = data,
-        error: (error) => console.error("Errore caricamento Utente", error)
+        next: (data)=>{ this.anagrafica = data;
+          console.log('data caricata in anagrafica: ', data);
+        },
+        error: (error)=>{ console.error("Errore caricamento Utente", error);
+        }
       });
     }
   }
