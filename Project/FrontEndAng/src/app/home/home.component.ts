@@ -20,6 +20,7 @@ export class HomeComponent implements OnInit{
  
   constructor(private authService: AuthService, private store: StorageService, ) {}
   
+
   ngOnInit(): void {
     if(this.store.isLogged()){
       this.token = this.store.getAuth();
@@ -31,24 +32,12 @@ export class HomeComponent implements OnInit{
         },
         error: (error)=>{ 
           console.error("Errore caricamento Utente", error);
-          if (error.status === 0) {
-            this.errorMsg = 'Server non raggiungibile. Verifica la connessione.';
-          } else if (error.status === 401) {
-            this.errorMsg = 'Sessione scaduta. Effettua di nuovo il login.';
-            // Puoi anche fare redirect automatico al login se vuoi
-          } else if (error.status === 404) {
-            this.errorMsg = 'Dati utente non trovati.';
-          } else {
-            this.errorMsg = `Errore imprevisto (${error.status}): ${error.statusText}`;
-          }
+          if (error.status)
+            this.errorMsg = `Errore ${error.status}: ${error.message}`;
         }
       });
-    } else {
-      this.errorMsg = 'Utente non autenticato. Effettua il login.';
-    }
+    } 
   }
-
-
 
   clearUserHome(): void {
     this.store.clean();
