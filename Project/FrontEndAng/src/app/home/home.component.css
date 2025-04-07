@@ -37,6 +37,16 @@
   transform: translateY(-50px); /* con valori negativi sposta il componente più in alto rispetto al centro */
 }
 
+.home-component p {
+  color:#45a049;
+  font-weight: 550;
+}
+
+.home-component p strong{
+  color: black;
+  font-weight: 700;
+}
+
 h2 {
   text-align: center;
   color: #007bff;
