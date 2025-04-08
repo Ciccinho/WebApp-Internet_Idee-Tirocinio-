@@ -41,18 +41,20 @@ export class LoginComponent implements OnInit {
     this.authService.login(this.username, this.password).subscribe({
       next: data => {
         this.storage.saveUser(this.username, this.password, data.token);
-        console.log('data:', data);
-        console.log('username:', this.username);
-        console.log('password:', this.password);
         this.isFailledLog = false;
         this.isLog = true;
-        this.showPopup = true;              //Mostra il popup dopo il login
+        this.showPopup = true;
+             
       },
       error: err => {
         this.errorMess = err.message;
         this.isFailledLog = true;
       }
     });
+    setTimeout(()=> {
+      this.showPopup = false;
+      this.goToAnagrafica();
+    }, 2000);         
   }
 
   goToAnagrafica (): void {
@@ -63,9 +65,5 @@ export class LoginComponent implements OnInit {
     this.storage.clean();
     this.isLog = false;
     this.route.navigate(['/login']);
-  }
-
-  closePopup(): void {
-    this.showPopup = false;
   }
 }

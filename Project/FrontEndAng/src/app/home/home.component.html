@@ -1,19 +1,64 @@
 <div class="home-wrapper">
-    <div *ngIf="errorMsg" class="error-message">
-        {{ errorMsg }}
-    </div>
+    <div class="home-container">
+        <h2> Benvenuto </h2>
 
-    <div class="home-component" *ngIf="anagrafica && !errorMsg">
-        <h2>Anagrafica</h2>
-        <p><strong>Nominativo: </strong>{{ anagrafica.nominativo }}</p>
-        <p><strong>Persona fisica: </strong>{{ anagrafica.personaFisica }}</p>
-        <p><strong>CF: </strong>{{ anagrafica.codiceFiscale }}</p>
-        <p><strong>P.IVA: </strong>{{ anagrafica.partitaIva }}</p>
-        <p><strong>Data nascita: </strong>{{ anagrafica.dataNascita }}</p>
-        <p><strong>Luogo nascita: </strong>{{ anagrafica.luogoNascita }}</p>
-        <p><strong>Sesso: </strong>{{ anagrafica.sesso }}</p>
-        <p><strong>Comune di nascita: </strong>{{ anagrafica.comuneNascita }}</p>
-        <p><strong>Nome: </strong>{{ anagrafica.nome }}</p>
-        <p><strong>Cognome: </strong>{{ anagrafica.cognome }}</p>
+        <div *ngIf="errorMsg" class="error-message">
+            {{ errorMsg }}
+        </div>
+
+        <div class="button-group">
+            <button (click)="visualizzaAnagrafica()">Info Dettagliate Debitore</button>
+            <button (click)="scaricaInfo()">Scarica Info Debitore </button>  
+            <button (click)="logout()">Logout</button>
+        </div>
+
+        <div class="modal-overlay" *ngIf="showAnagrafica">
+            <div class="modal-content">
+                <h2>Dettagli Anagrafica</h2>
+                <div class="anagrafica-vertical">
+                    <div class="anagrafica-item" *ngIf="anagrafica.nominativo">
+                        <span class="label">Nominativo: </span>
+                        <span class="value">{{ anagrafica.nominativo }}</span>
+                    </div>
+                    <div class="anagrafica-item" *ngIf="anagrafica.nome">
+                        <span class="label">Nome: </span>
+                        <span class="value">{{ anagrafica.nome }}</span>
+                    </div>
+                    <div class="anagrafica-item" *ngIf="anagrafica.cognome">
+                        <span class="label">Cognome: </span>
+                        <span class="value">{{ anagrafica.cognome }}</span>
+                    </div>
+                    <div class="anagrafica-item" *ngIf="anagrafica.codiceFiscale">
+                        <span class="label">CF: </span>
+                        <span class="value">{{ anagrafica.codiceFiscale }}</span>
+                    </div>
+                    <div class="anagrafica-item" *ngIf="anagrafica.partitaIva">
+                        <span class="label">Partita IVA: </span>
+                        <span class="value">{{ anagrafica.partitaIva }}</span>
+                    </div>
+                    <div class="anagrafica-item" *ngIf="anagrafica.personaFisica !== undefined">
+                        <span class="label">Persona Fisica: </span>
+                        <span class="value">{{ anagrafica.personaFisica }}</span>
+                    </div>
+                    <div class="anagrafica-item" *ngIf="anagrafica.dataNascita">
+                        <span class="label">Data di Nascita: </span>
+                        <span class="value">{{ anagrafica.dataNascita }}</span>
+                    </div>
+                    <div class="anagrafica-item" *ngIf="anagrafica.luogoNascita">
+                        <span class="label">Luogo di Nascita: </span>
+                        <span class="value">{{ anagrafica.luogoNascita }}</span>
+                    </div>
+                    <div class="anagrafica-item" *ngIf="anagrafica.comuneNascita">
+                        <span class="label">Comune di Nascita: </span>
+                        <span class="value">{{ anagrafica.comuneNascita }}</span>
+                    </div>
+                    <div class="anagrafica-item" *ngIf="anagrafica.sesso">
+                        <span class="label">Sesso: </span>
+                        <span class="value">{{ anagrafica.sesso }}</span>
+                    </div>
+                </div>
+                <button class="back-button" (click)="chiudiAnagrafica()">Chiudi</button>
+            </div>
+        </div>
     </div>
 </div>

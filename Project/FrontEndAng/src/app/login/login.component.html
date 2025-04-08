@@ -1,6 +1,7 @@
 <div class="login-wrapper">
     <div class= "login-component">
         <h2> Login</h2>
+
         <form *ngIf="!isLog" (ngSubmit)="login()" #loginForm="ngForm" novalidate>
 
             <div class="form-group">
@@ -21,17 +22,15 @@
             </div>
         </form>
 
-        <div *ngIf="showPopup" class="popup-overlay">
-            <div class="popup-box">
-                <h3>Login effettuato da: {{username}}</h3>
-                <button (click)="goToAnagrafica()">Vai all'Anagrafica</button>
-            </div>
-        </div>
-
         <div class="alert alert-success" *ngIf="isLog">
             Logged User: {{username}}
-            <p><button type="submit" class="btn btn-primary btn-block" (click)="goToAnagrafica()" >Visualizza Anagrafica</button></p>
+            <p><button type="submit" class="btn btn-primary btn-block" (click)="goToAnagrafica()" >Home</button></p>
             <p><button type="submit" class="btn btn-primary btn-block" (click)="logout()" >Logout </button><p>
+        </div>
+    </div>
+    <div *ngIf="showPopup" class="popup-overlay">
+        <div class="popup-box">
+            <h3>Login effettuato da:  <p>{{username}}</p></h3>
         </div>
     </div>
 </div>

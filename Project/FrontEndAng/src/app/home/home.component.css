@@ -1,62 +1,140 @@
-.navbar {
-  display: flex;
-  justify-content: space-around;
-  background-color: #007bff;
-  padding: 10px;
-}
-  
-.navbar a {
-  color: white;
-  text-decoration: none;
-  font-size: 18px;
-}
-  
-.navbar a.active {
-  font-weight: bold;
-  text-decoration: underline;
-}
-
 .home-wrapper {
   font-family: Arial, sans-serif;
   background-color: #f7f7f7;
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh; /*altezza dello schermo */
-  margin: 0;
+  height: 100vh;
+  padding: 20px;
+  box-sizing: border-box;
 }
 
-.home-component {
+.home-container {
   background: white;
   padding: 30px;
-  border-radius: 10px;
-  box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.1);
-  width: 100%; /* larghezza */ 
-  max-width: 400px;
-  text-align: center; /* Centra il testo */
-  transform: translateY(-50px); /* con valori negativi sposta il componente più in alto rispetto al centro */
-}
-
-.home-component p {
-  color:#45a049;
-  font-weight: 550;
-}
-
-.home-component p strong{
-  color: black;
-  font-weight: 700;
-}
-
-.error-message {
-  color: #fff;
-  background-color: #e74c3c;
-  padding: 12px;
-  border-radius: 5px;
-  font-weight: bold;
-  margin: 20px 0;
+  border-radius: 15px;
+  box-shadow: 0px 10px 25px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 500px;
+  text-align: center;
 }
 
 h2 {
   text-align: center;
   color: #007bff;
+  margin-bottom: 30px;
+}
+
+.button-group {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.button-group button {
+  padding: 12px;
+  background-color: #4CAF50;
+  border: none;
+  color: white;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s ease;
+}
+
+.button-group button:hover {
+  background-color: #45a049;
+}
+
+.anagrafica-section {
+  background-color: #ffffff;
+  padding: 20px;
+  border: 2px solid #4CAF50;
+  border-radius: 10px;
+  text-align: left;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+  margin-top: 20px;
+}
+
+.anagrafica-section h3 {
+  color: #4CAF50;
+  margin-bottom: 15px;
+  text-align: center;
+}
+
+.back-button {
+  margin-top: 20px;
+  padding: 10px 20px;
+  background-color: #4CAF50; 
+  border: none;
+  color: white;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 16px;
+  width: 100%;
+  transition: background-color 0.3s ease;
+}
+
+.back-button:hover {
+  background-color: #4CAF50;
+}
+
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.4);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modal-content {
+  background-color: #ffffff;
+  padding: 30px 25px;
+  border-radius: 12px;
+  max-width: 600px;
+  width: 90%;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+  text-align: center;
+  animation: fadeIn 0.3s ease-in-out;
+  max-height: 90vh;
+  overflow-y: auto;
+}
+
+@keyframes fadeIn {
+  from {
+    transform: scale(0.95);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+.label{
+  color: black;
+  font-size: 16xp;
+  font-weight: 600;
+}
+
+.value{
+  color: #4CAF50;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.error-message {
+  background-color: #e74c3c;
+  color: #fff;
+  padding: 12px;
+  border-radius: 6px;
+  margin-bottom: 20px;
+  text-align: center;
+  font-weight: bold;
 }

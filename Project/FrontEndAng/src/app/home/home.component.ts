@@ -17,6 +17,7 @@ export class HomeComponent implements OnInit{
   token: string ='';
   anagrafica: AnagraficaComponent = new AnagraficaComponent;
   errorMsg: String='';
+  showAnagrafica: boolean = false;
  
   constructor(private authService: AuthService, private store: StorageService, ) {}
   
@@ -24,22 +25,40 @@ export class HomeComponent implements OnInit{
   ngOnInit(): void {
     if(this.store.isLogged()){
       this.token = this.store.getAuth();
-      this.authService.getAnagraficaUser(this.token).subscribe({
-        next: (data)=>{ 
-          this.anagrafica = data;
-          this.errorMsg = '';
-          console.log('data caricata in anagrafica: ', data);
-        },
-        error: (error)=>{ 
-          console.error("Errore caricamento Utente", error);
-          if (error.status)
-            this.errorMsg = `Errore ${error.status}: ${error.message}`;
-        }
-      });
-    } 
+      this.user = this.store.getUsername();
+    } else {
+      this.errorMsg = 'Utente non autenticato. Esegui login.';
+    }
   }
 
-  clearUserHome(): void {
-    this.store.clean();
+  visualizzaAnagrafica(): void {
+    this.authService.getAnagraficaUser(this.token).subscribe({
+      next: (data)=>{ 
+        this.anagrafica = data;
+        console.log('data caricata in anagrafica: ');
+        this.showAnagrafica= true;
+        this.errorMsg ='';
+      },
+      error: (error)=>{ 
+        console.error("Errore caricamento Utente", error);
+        this.errorMsg = `Errore ${error.status}: ${error.name}`;
+        this.showAnagrafica = false;
+      }
+    });
+  } 
+
+  chiudiAnagrafica(): void {
+    this.showAnagrafica = false;
+  }  
+
+  scaricaInfo():void {
+    //Funzione predisposta ma non abilitata.
   }
+
+  logout(): void {
+    this.store.clean();
+    this.showAnagrafica = false;
+    window.location.href = '/login';
+  }
+
 }
