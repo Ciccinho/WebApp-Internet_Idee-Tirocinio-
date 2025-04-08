@@ -8,8 +8,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import it.internetidee.AbbreCatSin.auth.auth_entity.AuthRequest;
-import it.internetidee.AbbreCatSin.config.JwtService;
-import it.internetidee.AbbreCatSin.entity.Anagrafica;
 import it.internetidee.AbbreCatSin.error.CredenzialException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -17,8 +15,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestParam;
-
 
 
 
