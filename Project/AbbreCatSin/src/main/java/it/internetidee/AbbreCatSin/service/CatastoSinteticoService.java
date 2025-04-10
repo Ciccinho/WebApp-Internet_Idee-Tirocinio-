@@ -35,6 +35,7 @@ public class CatastoSinteticoService {
     }
 
     public CatastoResponse richiediReport(CatastoRequest request) throws Exception {
+        baseUrl = "https://www.portaleinformazioni.it/aps/app/wsrv/stdServer.php";
         UriComponentsBuilder uriBilder = UriComponentsBuilder.fromUriString(baseUrl)
             .queryParam("ist", ist)
             .queryParam("usr", usr)
@@ -46,5 +47,4 @@ public class CatastoSinteticoService {
         String responseXml = restTemplate.getForObject(uriBilder.toUriString(), String.class);
         return xmlMapper.readValue(responseXml, CatastoResponse.class);
     }
-
 }

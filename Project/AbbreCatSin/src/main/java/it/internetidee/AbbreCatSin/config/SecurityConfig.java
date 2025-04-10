@@ -27,7 +27,7 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain (HttpSecurity http) throws Exception {
         http
             .csrf(csrf -> csrf.disable())
-            .cors(cors -> cors.configurationSource(request->{                                                    //configurazione CORS
+            .cors(cors -> cors.configurationSource(request->{                                                       //configurazione CORS
                 CorsConfiguration configuration = new CorsConfiguration();
                 configuration.addAllowedOrigin("http://localhost:4200");                                      //origine abilitazione richieste
                 configuration.setAllowedMethods(List.of("GET","POST","PUT", "DELETE", "OPTION"));     //richieste permesse
@@ -37,9 +37,10 @@ public class SecurityConfig {
             })).addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class)
             .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
             .authorizeHttpRequests(authorizeRequest -> authorizeRequest
-                .requestMatchers(HttpMethod.POST, "/api/auth/login").permitAll()         //percorsi abilitati per le richieste
+                .requestMatchers(HttpMethod.POST, "/api/auth/login").permitAll()                        //percorsi abilitati per le richieste
                 .requestMatchers(HttpMethod.POST, "/api/auth/logout").authenticated()
                 .requestMatchers(HttpMethod.GET, "/api/auth/getAnagrafica/").authenticated()
+                .requestMatchers(HttpMethod.GET, "/api/catastoSintetico/").authenticated()
                 .requestMatchers("/error").permitAll()
                 .anyRequest().denyAll());
         return http.build();

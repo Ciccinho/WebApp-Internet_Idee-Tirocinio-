@@ -1,8 +1,10 @@
 package it.internetidee.AbbreCatSin.dtoCatasto;
 
 import lombok.Data;
+import lombok.RequiredArgsConstructor;
 
 @Data
+@RequiredArgsConstructor
 public class CatastoRequest {
 
     private String ist;

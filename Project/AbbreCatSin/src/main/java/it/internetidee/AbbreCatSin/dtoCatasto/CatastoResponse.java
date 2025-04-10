@@ -1,64 +1,71 @@
 package it.internetidee.AbbreCatSin.dtoCatasto;
 
-import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
-import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlRootElement;
-
+import jakarta.xml.bind.annotation.XmlAccessType;
+import jakarta.xml.bind.annotation.XmlAccessorType;
+import jakarta.xml.bind.annotation.XmlElement;
+import jakarta.xml.bind.annotation.XmlRootElement;
 import lombok.Data;
 
+
+@XmlRootElement(name = "apsRisposta")
+@XmlAccessorType(XmlAccessType.FIELD)
 @Data
-@JacksonXmlRootElement(localName = "apsRisposta")
 public class CatastoResponse {
 
-    @JacksonXmlProperty(localName = "aspEsito")
+    @XmlElement(name = "aspEsito")
     private Esito esito;
-    @JacksonXmlProperty(localName = "aspDati")
+    @XmlElement(name = "aspDati")
     private Dati dati;
 
     @Data
+    @XmlAccessorType(XmlAccessType.FIELD)
     public static class Esito {
         
-        @JacksonXmlProperty(localName = "codice")
+        @XmlElement(name = "codice")
         private int codice;
-        @JacksonXmlProperty(localName = "descrizione")
+        @XmlElement(name = "descrizione")
         private String descrizione;
     }
 
     @Data
+    @XmlAccessorType(XmlAccessType.FIELD)
     public static class Dati {
     
-        @JacksonXmlProperty(localName = "idReport")
+        @XmlElement(name = "idReport")
         private String idReport;
-        @JacksonXmlProperty(localName = "aPar")
+        @XmlElement(name = "aPar")
         private Parametri aPar;
     }
 
     @Data
+    @XmlAccessorType(XmlAccessType.FIELD)
     public static class Parametri {
     
-        @JacksonXmlProperty(localName = "tiposogg")
+        @XmlElement(name = "tiposogg")
         private String tipoSogg;
-        @JacksonXmlProperty(localName = "codifisc")
+        @XmlElement(name = "codfisc")
         private String codiceFisc;
     }
 
     @Data
+    @XmlAccessorType(XmlAccessType.FIELD)
     public static class Richiesta {
 
-        @JacksonXmlProperty(localName = "numMovEC")
+        @XmlElement(name = "numMovEC")
         private String numMovEC;
-        @JacksonXmlProperty(localName = "dataOra")
+        @XmlElement(name = "dataOra")
         private Data dataOra;
-        @JacksonXmlProperty(localName = "url")
+        @XmlElement(name = "url")
         private String url;
-        @JacksonXmlProperty(localName = "ist")
+        @XmlElement(name = "ist")
         private String ist;
-        @JacksonXmlProperty(localName = "usr")
+        @XmlElement(name = "usr")
         private String usr;
-        @JacksonXmlProperty(localName = "prd")
+        @XmlElement(name = "prd")
         private String prd;
-        @JacksonXmlProperty(localName = "tiposogg")
+        @XmlElement(name = "tiposogg")
         private String tipoSogg;
-        @JacksonXmlProperty(localName = "codifisc")
+        @XmlElement(name = "codfisc")
         private String codiceFisc;
     }
 }
