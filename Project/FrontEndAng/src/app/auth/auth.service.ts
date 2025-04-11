@@ -1,9 +1,11 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
 const urlAuth = 'http://localhost:8080/api/auth/';   //indirizzo del server
+const urlRepo = 'http://localhost:8080/api/'         //indirizzo chiamata server esterno
 const httpContent = {headers: new HttpHeaders ({'Content-Type': 'application/json'})} //generalizzazione per includere i file json nella trasmissione http
+
 
 
 @Injectable({
@@ -27,5 +29,10 @@ export class AuthService {
   getAnagraficaUser(token: string): Observable<any>{
     const header = new HttpHeaders({'Content-Type':'application/json', 'Authorization':`Bearer ${token}`});
     return this.http.get(urlAuth+'getAnagrafica/', { headers: header });
+  }
+
+  getCatastoReport (tipo: String, cf: String): Observable<any>{
+    const body = {tipo: tipo, cf: cf};
+    return this.http.put(urlRepo+'catastoSintetico', body, {headers: new HttpHeaders({ 'Content-Type': 'application/json'}), responseType: 'blob'});
   }
 }

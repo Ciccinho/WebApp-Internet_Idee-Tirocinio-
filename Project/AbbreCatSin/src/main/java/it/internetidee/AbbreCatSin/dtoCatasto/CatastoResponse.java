@@ -16,6 +16,8 @@ public class CatastoResponse {
     private Esito esito;
     @XmlElement(name = "aspDati")
     private Dati dati;
+    @XmlElement(name = "aspRichiesta")
+    private Richiesta richiesta;
 
     @Data
     @XmlAccessorType(XmlAccessType.FIELD)

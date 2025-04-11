@@ -1,16 +1,14 @@
 package it.internetidee.AbbreCatSin.dtoCatasto;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.RequiredArgsConstructor;
+import lombok.NoArgsConstructor;
 
 @Data
-@RequiredArgsConstructor
+@AllArgsConstructor
+@NoArgsConstructor
 public class CatastoRequest {
 
-    private String ist;
-    private String usr;
-    private String pwd;
-    private String prd;
     private String tipoSogg;
     private String codFisc;
 }

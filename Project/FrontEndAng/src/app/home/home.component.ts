@@ -18,6 +18,8 @@ export class HomeComponent implements OnInit{
   anagrafica: AnagraficaComponent = new AnagraficaComponent;
   errorMsg: String='';
   showAnagrafica: boolean = false;
+  tipo: string = '';
+  cf: string = ''
  
   constructor(private authService: AuthService, private store: StorageService, ) {}
   
@@ -52,7 +54,27 @@ export class HomeComponent implements OnInit{
   }  
 
   scaricaInfo():void {
-    //Funzione predisposta ma non abilitata.
+    this.cf = this.anagrafica.codiceFiscale;
+    if(this.anagrafica.personaFisica)
+      this.tipo = 'F';
+    else
+      this.tipo = 'G';
+    this.authService.getCatastoReport(this.tipo, this.cf).subscribe({
+      next: (blob: any)=>{
+        const url = window.URL.createObjectURL(blob);
+        const repo = document.createElement('repo') as HTMLAnchorElement;
+        repo.href = url;
+        repo.download = 'catasto_report.xlsx';
+        document.body.appendChild(repo);
+        repo.click();
+        document.body.removeChild(repo);
+        window.URL.revokeObjectURL(url);
+      },
+      error: (error)=>{
+        console.error('Errore nel download del file', error);
+        this.errorMsg = `Errore${error.status}: ${error.name}`;
+      }
+    });
   }
 
   logout(): void {

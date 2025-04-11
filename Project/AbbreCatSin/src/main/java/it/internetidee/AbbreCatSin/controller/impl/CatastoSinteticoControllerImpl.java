@@ -1,5 +1,9 @@
 package it.internetidee.AbbreCatSin.controller.impl;
 
+import org.springframework.core.io.ByteArrayResource;
+import org.springframework.core.io.Resource;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RestController;
 import lombok.RequiredArgsConstructor;
@@ -18,10 +22,24 @@ public class CatastoSinteticoControllerImpl implements CatastoSinteticoControlle
 
 
     @Override
-    public ResponseEntity<CatastoResponse> richiesta(CatastoRequest request) {
+    public ResponseEntity<Resource> richiesta(String tipo, String cf) {
         try{
-            CatastoResponse response = service.richiediReport(request);
-            return ResponseEntity.ok(response);
+            if(tipo != null && cf != null) {
+                CatastoResponse response = service.richiediReport(new CatastoRequest(tipo, cf));
+                try{
+                    byte[] excel = service.generaExRepo(response);
+                    HttpHeaders header = new HttpHeaders();
+                    header.setContentType(MediaType.parseMediaType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"));
+                    header.setContentLength(excel.length);
+                    header.set(HttpHeaders.CONTENT_DISPOSITION,"attachment; filename=\"catasto_report.xlsx\"");
+                    ByteArrayResource resourse = new ByteArrayResource(excel);
+                    return ResponseEntity.ok().headers(header).body(resourse);
+                } catch (Exception e) {
+                    return ResponseEntity.internalServerError().build();
+                }
+            } else {
+                return ResponseEntity.noContent().build();
+            }
         } catch(Exception e) {
             return ResponseEntity.internalServerError().build();
         }
