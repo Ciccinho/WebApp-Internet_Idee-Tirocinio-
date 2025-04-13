@@ -19,15 +19,15 @@ import org.springframework.beans.factory.annotation.Value;
 @Service
 public class CatastoSinteticoService {
 
-    @Value("${base-url}")
+    @Value("${catasto.service.base-url}")
     private String baseUrl;
-    @Value("${abbrevia.inst}") 
+    @Value("${catasto.service.abbrevia.ist}") 
     private String ist;
-    @Value("${usr}")
+    @Value("${catasto.service.urs}")
     private String usr;
-    @Value("${pwd}")
+    @Value("${catasto.service.pwd}")
     private String pwd;
-    @Value("${prodotto}")
+    @Value("${catasto.service.prd}")
     private String prodotto;
 
     

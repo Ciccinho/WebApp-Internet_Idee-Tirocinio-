@@ -2,7 +2,7 @@ import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
-const urlAuth = 'http://localhost:8080/api/auth/';   //indirizzo del server
+const urlAuth = 'http://localhost:8080/api/auth/';   //indirizzo backend
 const urlRepo = 'http://localhost:8080/api/'         //indirizzo chiamata server esterno
 const httpContent = {headers: new HttpHeaders ({'Content-Type': 'application/json'})} //generalizzazione per includere i file json nella trasmissione http
 
