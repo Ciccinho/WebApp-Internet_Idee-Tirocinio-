@@ -78,6 +78,16 @@ button:hover {
   z-index: 1000;
 }
 
+.errorMess{
+  background-color: #e74c3c;
+  color: #fff;
+  padding: 12px;
+  border-radius: 6px;
+  margin-bottom: 20px;
+  text-align: center;
+  font-weight: bold;
+}
+
 .popup-box {
   background-color: #ffffff;
   padding: 30px 25px;

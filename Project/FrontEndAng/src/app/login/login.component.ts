@@ -44,17 +44,19 @@ export class LoginComponent implements OnInit {
         this.isFailledLog = false;
         this.isLog = true;
         this.showPopup = true;
-             
+        if(this.storage.isLogged()){
+          setTimeout(()=> {
+            this.showPopup = false;
+            this.goToAnagrafica();
+          }, 2000);         
+        }
       },
       error: err => {
-        this.errorMess = err.message;
+        this.errorMess = `Errore ${err.status}: ${err.name}`;
         this.isFailledLog = true;
       }
     });
-    setTimeout(()=> {
-      this.showPopup = false;
-      this.goToAnagrafica();
-    }, 2000);         
+    
   }
 
   goToAnagrafica (): void {

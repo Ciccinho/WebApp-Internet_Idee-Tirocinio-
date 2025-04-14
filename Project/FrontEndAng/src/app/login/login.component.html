@@ -15,11 +15,7 @@
             </div>
             
             <button type="submit" class="btn btn-primary btn-block">Login </button>
-            <div class="form-group">
-                <div *ngIf="loginForm.submitted && isFailledLog" class="alert alert-danger"> 
-                    Login failed {{ errorMess}}
-                </div>
-            </div>
+            <div class="form-group"> </div>
         </form>
 
         <div class="alert alert-success" *ngIf="isLog">
@@ -27,10 +23,17 @@
             <p><button type="submit" class="btn btn-primary btn-block" (click)="goToAnagrafica()" >Home</button></p>
             <p><button type="submit" class="btn btn-primary btn-block" (click)="logout()" >Logout </button><p>
         </div>
+
+        <div class="alert errorMess" *ngIf="errorMess">
+            Login failed, {{ errorMess}}
+        </div>
+
     </div>
+
     <div *ngIf="showPopup" class="popup-overlay">
         <div class="popup-box">
             <h3>Login effettuato da:  <p>{{username}}</p></h3>
         </div>
+        
     </div>
 </div>
