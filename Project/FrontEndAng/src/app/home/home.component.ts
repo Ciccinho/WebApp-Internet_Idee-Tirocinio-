@@ -18,7 +18,7 @@ export class HomeComponent implements OnInit{
   anagrafica: AnagraficaComponent = new AnagraficaComponent;
   errorMsg: String='';
   showAnagrafica: boolean = false;
-  tipo: string = '';
+  tipo: any = '';
   cf: string = ''
  
   constructor(private authService: AuthService, private store: StorageService, ) {}
@@ -37,7 +37,10 @@ export class HomeComponent implements OnInit{
     this.authService.getAnagraficaUser(this.token).subscribe({
       next: (data)=>{ 
         this.anagrafica = data;
-        console.log('data caricata in anagrafica: ');
+        console.log('data caricata in anagrafica', data);
+        this.tipo = data.personaFisica;
+        this.cf = data.codiceFiscale;
+        console.log('tipoSogg: ', this.tipo, ' cf: ', this.cf);
         this.showAnagrafica= true;
         this.errorMsg ='';
       },
@@ -54,13 +57,16 @@ export class HomeComponent implements OnInit{
   }  
 
   scaricaInfo():void {
+    this.cf = this.store.getCf();
+    this.tipo = this.store.getTipo();
+    console.log('tipo: ', this.tipo, ' cf: ', this.cf);
+    console.log('anagrafica: ', this.anagrafica);
     this.cf = this.anagrafica.codiceFiscale;
-    if(this.anagrafica.personaFisica)
-      this.tipo = 'F';
-    else
-      this.tipo = 'G';
+    this.tipo = this.anagrafica.personaFisica;
+    console.log('DENTRO SCARICAINFO = cf: ', this.cf, ' tipo: ', this.tipo);
+    
     this.authService.getCatastoReport(this.tipo, this.cf).subscribe({
-      next: (blob: any)=>{
+      next: (blob: Blob)=>{
         const url = window.URL.createObjectURL(blob);
         const repo = document.createElement('repo') as HTMLAnchorElement;
         repo.href = url;

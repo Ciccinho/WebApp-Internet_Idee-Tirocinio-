@@ -1,7 +1,7 @@
 export class AnagraficaComponent {
 
   nominativo!: string;
-  personaFisica!: any;
+  personaFisica!: string;
   codiceFiscale!: any;
   partitaIva!: string;
   dataNascita!: any;

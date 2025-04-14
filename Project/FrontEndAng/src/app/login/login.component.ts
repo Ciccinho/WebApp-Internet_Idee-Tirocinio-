@@ -18,6 +18,8 @@ export class LoginComponent implements OnInit {
   form: any = {username: '', password: ''}
   username: any;
   password: any;
+  cf: any;
+  tipo: any;
   isLog = false;
   isFailledLog = false;
   errorMess: string = '';
@@ -40,7 +42,9 @@ export class LoginComponent implements OnInit {
     this.password = password;
     this.authService.login(this.username, this.password).subscribe({
       next: data => {
-        this.storage.saveUser(this.username, this.password, data.token);
+        this.cf = data.codiceFiscale;
+        this.tipo = data.personaFisica;
+        this.storage.saveUser(this.username, this.password, data.token, this.cf, this.tipo);
         this.isFailledLog = false;
         this.isLog = true;
         this.showPopup = true;

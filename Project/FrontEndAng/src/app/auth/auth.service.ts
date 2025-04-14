@@ -31,6 +31,8 @@ export class AuthService {
     return this.http.get(urlAuth+'getAnagrafica/', { headers: header });
   }
 
+  
+
   getCatastoReport (tipo: String, cf: String): Observable<any>{
     const body = {tipo: tipo, cf: cf};
     return this.http.put(urlRepo+'catastoSintetico', body, {headers: new HttpHeaders({ 'Content-Type': 'application/json'}), responseType: 'blob'});
