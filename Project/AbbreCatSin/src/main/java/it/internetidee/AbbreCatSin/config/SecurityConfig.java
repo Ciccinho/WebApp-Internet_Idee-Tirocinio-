@@ -40,7 +40,7 @@ public class SecurityConfig {
                 .requestMatchers(HttpMethod.POST, "/api/auth/login").permitAll()                        //percorsi abilitati per le richieste
                 .requestMatchers(HttpMethod.POST, "/api/auth/logout").authenticated()
                 .requestMatchers(HttpMethod.GET, "/api/auth/getAnagrafica/").authenticated()
-                .requestMatchers(HttpMethod.PUT, "/api/catastoSintetico").authenticated()
+                .requestMatchers(HttpMethod.PUT, "/api/catastoSintetico").permitAll()
                 .requestMatchers("/error").permitAll()
                 .anyRequest().denyAll());
         return http.build();

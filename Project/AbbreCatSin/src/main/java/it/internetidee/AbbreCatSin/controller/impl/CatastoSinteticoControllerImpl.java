@@ -5,6 +5,7 @@ import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import lombok.RequiredArgsConstructor;
 
@@ -22,10 +23,10 @@ public class CatastoSinteticoControllerImpl implements CatastoSinteticoControlle
 
 
     @Override
-    public ResponseEntity<Resource> richiesta(String tipo, String cf) {
+    public ResponseEntity<Resource> richiesta(@RequestBody CatastoRequest request) {
         try{
-            if(tipo != null && cf != null) {
-                CatastoResponse response = service.richiediReport(new CatastoRequest(tipo, cf));
+            if(request.getTipoSogg() != null && request.getCodFisc() != null) {
+                CatastoResponse response = service.richiediReport(new CatastoRequest(request.getTipoSogg(), request.getCodFisc()));
                 try{
                     byte[] excel = service.generaExRepo(response);
                     HttpHeaders header = new HttpHeaders();

@@ -67,9 +67,3 @@ INSERT INTO dati_accesso (username, password, attivo, fk_id_anagrafica, ip)
 VALUES ('mario.rossi', 'password123', TRUE, 1, '192.168.1.1');
 INSERT INTO dati_accesso (username, password, attivo, fk_id_anagrafica, ip)
 VALUES ('lucia.bianchi', 'securepwd', TRUE, 2, '192.168.1.2');
-
-
-
-
-
-

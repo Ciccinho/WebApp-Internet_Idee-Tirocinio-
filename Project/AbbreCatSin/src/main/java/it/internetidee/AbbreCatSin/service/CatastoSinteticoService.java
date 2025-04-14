@@ -40,8 +40,8 @@ public class CatastoSinteticoService {
         this.xmlMapper = new XmlMapper();
     }
 
-    public CatastoResponse richiediReport(CatastoRequest request) throws Exception {
-        UriComponentsBuilder uriBilder = UriComponentsBuilder.fromUriString(baseUrl)
+    public CatastoResponse richiediReport(CatastoRequest request) throws Exception {            //creazione URL richiesta servizio esterno 
+        UriComponentsBuilder uriBilder = UriComponentsBuilder.fromUriString(baseUrl)            // risposta con file XML
             .queryParam("ist", ist)
             .queryParam("usr", usr)
             .queryParam("pwd", pwd)
@@ -53,7 +53,7 @@ public class CatastoSinteticoService {
         return xmlMapper.readValue(responseXml, CatastoResponse.class);
     }
 
-    public byte[] generaExRepo(CatastoResponse response) throws Exception {
+    public byte[] generaExRepo(CatastoResponse response) throws Exception {                     //creazione file excel dal file XML di risposta
         XSSFWorkbook workbook = new XSSFWorkbook();
         XSSFSheet sheet = workbook.createSheet("Catasto Report "+ response.getDati().getAPar().getCodiceFisc());
         int numRow = 0;
