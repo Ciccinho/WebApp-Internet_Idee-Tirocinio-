@@ -18,7 +18,8 @@ export class HomeComponent implements OnInit{
   anagrafica: AnagraficaComponent = new AnagraficaComponent;
   errorMsg: String='';
   showAnagrafica: boolean = false;
-  tipo: any = '';
+  tipo: boolean =  false;
+  tipoSogg: string = '';
   cf: string = ''
  
   constructor(private authService: AuthService, private store: StorageService, ) {}
@@ -57,17 +58,12 @@ export class HomeComponent implements OnInit{
   }  
 
   scaricaInfo():void {
-    this.cf = this.store.getCf();
-    this.tipo = this.store.getTipo();
-    console.log('tipo: ', this.tipo, ' cf: ', this.cf);
-    console.log('anagrafica: ', this.anagrafica);
-    this.cf = this.anagrafica.codiceFiscale;
-    this.tipo = this.anagrafica.personaFisica;
-    console.log('DENTRO SCARICAINFO = cf: ', this.cf, ' tipo: ', this.tipo);
     
-    this.authService.getCatastoReport(this.tipo, this.cf).subscribe({
-      next: (blob: Blob)=>{
-        const url = window.URL.createObjectURL(blob);
+    console.log('dentro SCARICAINFO = token: ', this.token,);
+    
+    this.authService.getReport(this.token).subscribe({  // passare il token nella funzione 
+      next: (response: Blob)=>{
+        const url = window.URL.createObjectURL(response);
         const repo = document.createElement('repo') as HTMLAnchorElement;
         repo.href = url;
         repo.download = 'catasto_report.xlsx';

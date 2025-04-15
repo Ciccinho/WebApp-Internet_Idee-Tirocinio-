@@ -6,15 +6,22 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 import com.fasterxml.jackson.dataformat.xml.XmlMapper;
 
-import it.internetidee.AbbreCatSin.dtoCatasto.CatastoRequest;
+import it.internetidee.AbbreCatSin.config.JwtService;
 import it.internetidee.AbbreCatSin.dtoCatasto.CatastoResponse;
+import it.internetidee.AbbreCatSin.entity.Anagrafica;
+import lombok.var;
+import it.internetidee.AbbreCatSin.dao.AnagraficaDao;
+import it.internetidee.AbbreCatSin.dao.UserDao;
 
 import java.io.ByteArrayOutputStream;
+
+import javax.naming.NameNotFoundException;
 
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
 @Service
 public class CatastoSinteticoService {
@@ -29,28 +36,68 @@ public class CatastoSinteticoService {
     private String pwd;
     @Value("${catasto.service.prd}")
     private String prodotto;
-
+    @Value("${catasto.service.mock}")
+    private boolean mock;
     
     private final RestTemplate restTemplate;
     private final XmlMapper xmlMapper;
+    private final JwtService jwtService;
+    private final UserDao userDao;
+    private final AnagraficaDao anagraficaDao;
 
 
     public CatastoSinteticoService() {
         this.restTemplate = new RestTemplate();
         this.xmlMapper = new XmlMapper();
+        this.jwtService = new JwtService();
+        this.userDao = null;
+        this.anagraficaDao = null;
     }
 
-    public CatastoResponse richiediReport(CatastoRequest request) throws Exception {            //creazione URL richiesta servizio esterno 
+    public CatastoResponse richiediReport(String token) throws Exception {   
+        if(mock){
+            CatastoResponse response = new CatastoResponse();
+            response.getEsito().setCodice(11);
+            response.getEsito().setDescrizione("descrizione");
+            response.getDati().setIdReport("id");
+            response.getDati().setAPar(null);
+            response.getRichiesta().setCodiceFisc("codice fiscale");
+            response.getRichiesta().setDataOra(null);
+            response.getRichiesta().setIst("istanza");
+            response.getRichiesta().setNumMovEC("numero MOV");
+            response.getRichiesta().setPrd("prodotto");
+            response.getRichiesta().setTipoSogg("persona fisica");
+            response.getRichiesta().setUrl("url");
+            response.getRichiesta().setUsr("User");
+            return response;
+        }
+
+        if(token.startsWith("Bearer "))
+                token = token.substring(7);
+            String username = jwtService.extractUsername(token);
+            System.out.println("token:" + token );
+            var user = userDao.findByUsername(username).orElseThrow(()-> new UsernameNotFoundException("Username not found"));
+            Anagrafica anagrafica = anagraficaDao.findById((user.getAnagrafica().getId())).orElseThrow(()-> new NameNotFoundException("Anagrafica not found"));
+            String codFisc = anagrafica.getCodiceFiscale();
+            String tipoSog = new String();
+            boolean tipo = anagrafica.getPersonaFisica();
+            if(tipo == true)
+                tipoSog = "F";
+            else
+                tipoSog = "G";
         UriComponentsBuilder uriBilder = UriComponentsBuilder.fromUriString(baseUrl)            // risposta con file XML
             .queryParam("ist", ist)
             .queryParam("usr", usr)
             .queryParam("pwd", pwd)
             .queryParam("prodotto", prodotto)
-            .queryParam("tipoSogg", request.getTipoSogg())
-            .queryParam("codiFisc", request.getCodFisc())
+            .queryParam("tipoSogg", tipoSog)
+            .queryParam("codiFisc", codFisc)
             .queryParam("tipoXml", "xml");
         String responseXml = restTemplate.getForObject(uriBilder.toUriString(), String.class);
+        
+
         return xmlMapper.readValue(responseXml, CatastoResponse.class);
+        
     }
 
     public byte[] generaExRepo(CatastoResponse response) throws Exception {                     //creazione file excel dal file XML di risposta
