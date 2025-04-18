@@ -56,7 +56,7 @@ export class LoginComponent implements OnInit {
         }
       },
       error: err => {
-        this.errorMess = `Errore ${err.status}: ${err.name}`;
+        this.errorMess = `Errore ${err.status}: ${err.message}`;
         this.isFailledLog = true;
       }
     });

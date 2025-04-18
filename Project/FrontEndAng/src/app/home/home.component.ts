@@ -59,9 +59,9 @@ export class HomeComponent implements OnInit{
 
   scaricaInfo():void {
     
-    console.log('dentro SCARICAINFO = token: ', this.token,);
+    console.log('dentro SCARICAINFO FRONT= token: ', this.token,);
     
-    this.authService.getReport(this.token).subscribe({  // passare il token nella funzione 
+    this.authService.getReport(this.token).subscribe({  
       next: (response: Blob)=>{
         const url = window.URL.createObjectURL(response);
         const repo = document.createElement('repo') as HTMLAnchorElement;
@@ -74,7 +74,7 @@ export class HomeComponent implements OnInit{
       },
       error: (error)=>{
         console.error('Errore nel download del file', error);
-        this.errorMsg = `Errore${error.status}: ${error.name}`;
+        this.errorMsg = `Errore${error.status}: ${error.message}`;
       }
     });
   }

@@ -1,22 +1,25 @@
 package it.internetidee.AbbreCatSin.dtoCatasto;
 
+import java.time.LocalDateTime;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import jakarta.xml.bind.annotation.XmlAccessType;
 import jakarta.xml.bind.annotation.XmlAccessorType;
 import jakarta.xml.bind.annotation.XmlElement;
 import jakarta.xml.bind.annotation.XmlRootElement;
 import lombok.Data;
 
-
+@Data
 @XmlRootElement(name = "apsRisposta")
 @XmlAccessorType(XmlAccessType.FIELD)
-@Data
 public class CatastoResponse {
 
-    @XmlElement(name = "aspEsito")
+    @XmlElement(name = "apsEsito")
     private Esito esito;
-    @XmlElement(name = "aspDati")
+    @XmlElement(name = "apsDati")
     private Dati dati;
-    @XmlElement(name = "aspRichiesta")
+    @XmlElement(name = "apsRichiesta")
     private Richiesta richiesta;
 
     @Data
@@ -47,7 +50,7 @@ public class CatastoResponse {
         private String tipoSogg;
         @XmlElement(name = "codfisc")
         private String codiceFisc;
-    }
+    };
 
     @Data
     @XmlAccessorType(XmlAccessType.FIELD)
@@ -56,7 +59,7 @@ public class CatastoResponse {
         @XmlElement(name = "numMovEC")
         private String numMovEC;
         @XmlElement(name = "dataOra")
-        private Data dataOra;
+        private LocalDateTime dataOra;
         @XmlElement(name = "url")
         private String url;
         @XmlElement(name = "ist")

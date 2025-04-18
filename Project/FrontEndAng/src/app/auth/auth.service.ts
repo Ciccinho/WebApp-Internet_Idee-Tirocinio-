@@ -39,6 +39,6 @@ export class AuthService {
 
   getReport (token: string): Observable<any>{
     const header = new HttpHeaders({'Content-Type':'application/json'});
-    return this.http.post(urlRepo+'catastoSintetico', {token} , {headers: header} );
-  }
+    return this.http.post(urlRepo+'catastoSintetico', `${token}` , {headers: header} );//modificare con token
+  }                                                                                   //qui e in home.component
 }

@@ -4,26 +4,26 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.dataformat.xml.XmlMapper;
+import com.fasterxml.jackson.module.jaxb.JaxbAnnotationModule;
 
-import it.internetidee.AbbreCatSin.config.JwtService;
+import it.internetidee.AbbreCatSin.auth.AuthService;
 import it.internetidee.AbbreCatSin.dtoCatasto.CatastoResponse;
 import it.internetidee.AbbreCatSin.entity.Anagrafica;
-import lombok.var;
-import it.internetidee.AbbreCatSin.dao.AnagraficaDao;
-import it.internetidee.AbbreCatSin.dao.UserDao;
+
+import lombok.RequiredArgsConstructor;
 
 import java.io.ByteArrayOutputStream;
-
-import javax.naming.NameNotFoundException;
 
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
 @Service
+@RequiredArgsConstructor
 public class CatastoSinteticoService {
 
     @Value("${catasto.service.base-url}")
@@ -36,55 +36,40 @@ public class CatastoSinteticoService {
     private String pwd;
     @Value("${catasto.service.prd}")
     private String prodotto;
-    @Value("${catasto.service.mock}")
-    private boolean mock;
-    
-    private final RestTemplate restTemplate;
-    private final XmlMapper xmlMapper;
-    private final JwtService jwtService;
-    private final UserDao userDao;
-    private final AnagraficaDao anagraficaDao;
+    // @Value("${catasto.service.mock}")
+    // private boolean mock;
+    @Autowired
+    private final AuthService service;
+    private RestTemplate restTemplate = new RestTemplate();
+    private XmlMapper xmlMapper = new XmlMapper();
 
-
-    public CatastoSinteticoService() {
-        this.restTemplate = new RestTemplate();
-        this.xmlMapper = new XmlMapper();
-        this.jwtService = new JwtService();
-        this.userDao = null;
-        this.anagraficaDao = null;
-    }
-
+                            //modificare per aver token come parametro del metodo
     public CatastoResponse richiediReport(String token) throws Exception {   
-        if(mock){
-            CatastoResponse response = new CatastoResponse();
-            response.getEsito().setCodice(11);
-            response.getEsito().setDescrizione("descrizione");
-            response.getDati().setIdReport("id");
-            response.getDati().setAPar(null);
-            response.getRichiesta().setCodiceFisc("codice fiscale");
-            response.getRichiesta().setDataOra(null);
-            response.getRichiesta().setIst("istanza");
-            response.getRichiesta().setNumMovEC("numero MOV");
-            response.getRichiesta().setPrd("prodotto");
-            response.getRichiesta().setTipoSogg("persona fisica");
-            response.getRichiesta().setUrl("url");
-            response.getRichiesta().setUsr("User");
-            return response;
-        }
-
-        if(token.startsWith("Bearer "))
-                token = token.substring(7);
-            String username = jwtService.extractUsername(token);
-            System.out.println("token:" + token );
-            var user = userDao.findByUsername(username).orElseThrow(()-> new UsernameNotFoundException("Username not found"));
-            Anagrafica anagrafica = anagraficaDao.findById((user.getAnagrafica().getId())).orElseThrow(()-> new NameNotFoundException("Anagrafica not found"));
-            String codFisc = anagrafica.getCodiceFiscale();
-            String tipoSog = new String();
-            boolean tipo = anagrafica.getPersonaFisica();
-            if(tipo == true)
-                tipoSog = "F";
-            else
-                tipoSog = "G";
+        // if(mock){
+        //     CatastoResponse response = new CatastoResponse();
+        //     response.getEsito().setCodice(11);
+        //     response.getEsito().setDescrizione("descrizione");
+        //     response.getDati().setIdReport("id");
+        //     response.getDati().setAPar(null);
+        //     response.getRichiesta().setCodiceFisc("codice fiscale");
+        //     response.getRichiesta().setDataOra(null);
+        //     response.getRichiesta().setIst("istanza");
+        //     response.getRichiesta().setNumMovEC("numero MOV");
+        //     response.getRichiesta().setPrd("prodotto");
+        //     response.getRichiesta().setTipoSogg("persona fisica");
+        //     response.getRichiesta().setUrl("url");
+        //     response.getRichiesta().setUsr("User");
+        //     return response;
+        // }
+        System.out.println("DENTRO Service");
+        Anagrafica anagrafica = service.getAnagrafica(token);
+        String codFisc = anagrafica.getCodiceFiscale();
+        String tipoSog = new String();
+        boolean tipo = anagrafica.getPersonaFisica();
+        if(tipo == true)
+            tipoSog = "F";
+        else
+            tipoSog = "G";
         UriComponentsBuilder uriBilder = UriComponentsBuilder.fromUriString(baseUrl)            // risposta con file XML
             .queryParam("ist", ist)
             .queryParam("usr", usr)
@@ -94,15 +79,16 @@ public class CatastoSinteticoService {
             .queryParam("codiFisc", codFisc)
             .queryParam("tipoXml", "xml");
         String responseXml = restTemplate.getForObject(uriBilder.toUriString(), String.class);
-        
-
+        System.out.println("RESPONSExml: "+responseXml);
+        xmlMapper.registerModule(new JaxbAnnotationModule());
+        xmlMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
         return xmlMapper.readValue(responseXml, CatastoResponse.class);
         
     }
 
-    public byte[] generaExRepo(CatastoResponse response) throws Exception {                     //creazione file excel dal file XML di risposta
+    public byte[] generaExRepo(CatastoResponse response) throws Exception {   //creazione file excel dal file XML di risposta
         XSSFWorkbook workbook = new XSSFWorkbook();
-        XSSFSheet sheet = workbook.createSheet("Catasto Report "+ response.getDati().getAPar().getCodiceFisc());
+        XSSFSheet sheet = workbook.createSheet("Catasto Report ");
         int numRow = 0;
         Row headeRow = sheet.createRow(numRow++);
         headeRow.createCell(0).setCellValue("Codice");
@@ -121,11 +107,12 @@ public class CatastoSinteticoService {
         headeRow = sheet.createRow(numRow++);
         headeRow.createCell(0).setCellValue("Tipo Soggetto");
         headeRow.createCell(1).setCellValue("Codice Fiscale");
-        if( response.getDati().getAPar() != null ){
-            Row dataRow = sheet.createRow(numRow++);
-            dataRow.createCell(0).setCellValue(response.getDati().getAPar().getTipoSogg());
-            dataRow.createCell(1).setCellValue(response.getDati().getAPar().getCodiceFisc());
-        }
+        if(response.getDati() != null)
+            if( response.getDati().getAPar() != null ){                                                  
+                Row dataRow = sheet.createRow(numRow++);                                                
+                dataRow.createCell(0).setCellValue(response.getDati().getAPar().getTipoSogg());  
+                dataRow.createCell(1).setCellValue(response.getDati().getAPar().getCodiceFisc());
+            }                                                                                               
         headeRow = sheet.createRow(numRow++);
         headeRow.createCell(0).setCellValue("Numero Movimento EC");
         headeRow.createCell(1).setCellValue("Data Ora");
@@ -138,8 +125,7 @@ public class CatastoSinteticoService {
         if(response.getRichiesta() != null){
             Row dataRow = sheet.createRow(numRow++);
             dataRow.createCell(0).setCellValue(response.getRichiesta().getNumMovEC());
-            String dataOra = response.getRichiesta().getDataOra().toString();
-            dataRow.createCell(1).setCellValue(dataOra);
+            dataRow.createCell(1).setCellValue(response.getRichiesta().getDataOra());
             dataRow.createCell(2).setCellValue(response.getRichiesta().getUrl());
             dataRow.createCell(3).setCellValue(response.getRichiesta().getIst());
             dataRow.createCell(4).setCellValue(response.getRichiesta().getUsr());
