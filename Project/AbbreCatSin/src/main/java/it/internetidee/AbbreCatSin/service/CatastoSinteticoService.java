@@ -43,7 +43,7 @@ public class CatastoSinteticoService {
     private RestTemplate restTemplate = new RestTemplate();
     private XmlMapper xmlMapper = new XmlMapper();
 
-                            //modificare per aver token come parametro del metodo
+    
     public CatastoResponse richiediReport(String token) throws Exception {   
         // if(mock){
         //     CatastoResponse response = new CatastoResponse();

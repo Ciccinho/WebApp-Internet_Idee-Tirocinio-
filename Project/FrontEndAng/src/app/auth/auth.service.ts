@@ -37,8 +37,8 @@ export class AuthService {
     return this.http.post(urlRepo+'catastoSintetico',{headers: header , 'responseType':'blob'});
   }
 
-  getReport (token: string): Observable<any>{
+  getReport (token: string): Observable<Blob>{
     const header = new HttpHeaders({'Content-Type':'application/json'});
-    return this.http.post(urlRepo+'catastoSintetico', `${token}` , {headers: header} );//modificare con token
-  }                                                                                   //qui e in home.component
+    return this.http.post(urlRepo+'catastoSintetico', `${token}` , {headers: header, responseType: 'blob'});
+  }                                                                                   
 }

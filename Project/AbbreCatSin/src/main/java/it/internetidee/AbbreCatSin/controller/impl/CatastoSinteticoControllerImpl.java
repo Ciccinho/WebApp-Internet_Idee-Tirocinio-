@@ -6,7 +6,6 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RestController;
 import lombok.RequiredArgsConstructor;
 import it.internetidee.AbbreCatSin.controller.CatastoSinteticoController;
@@ -26,6 +25,7 @@ public class CatastoSinteticoControllerImpl implements CatastoSinteticoControlle
     public ResponseEntity<Object> richiesta(@RequestBody String token) throws Exception {
         System.out.println("DENTRO ControllerImpl ");
         CatastoResponse response = service.richiediReport(token);
+        System.out.println("RESPONSE ricevuto da SERVICE: "+response);
         byte[] excel = service.generaExRepo(response);
         try{
             HttpHeaders header = new HttpHeaders();
@@ -38,4 +38,4 @@ public class CatastoSinteticoControllerImpl implements CatastoSinteticoControlle
             return ResponseEntity.internalServerError().build();
         }
     }
-}
+} 
