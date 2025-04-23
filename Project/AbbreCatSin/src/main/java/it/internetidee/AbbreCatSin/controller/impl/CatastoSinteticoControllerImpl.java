@@ -23,9 +23,8 @@ public class CatastoSinteticoControllerImpl implements CatastoSinteticoControlle
 
     @Override
     public ResponseEntity<Object> richiesta(@RequestBody String token) throws Exception {
-        System.out.println("DENTRO ControllerImpl ");
         CatastoResponse response = service.richiediReport(token);
-        System.out.println("RESPONSE ricevuto da SERVICE: "+response);
+        System.out.println("RESPONSE: "+response);
         byte[] excel = service.generaExRepo(response);
         try{
             HttpHeaders header = new HttpHeaders();

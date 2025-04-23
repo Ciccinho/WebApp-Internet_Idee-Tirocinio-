@@ -1,52 +1,48 @@
 package it.internetidee.AbbreCatSin.dtoCatasto;
 
-import java.time.LocalDateTime;
+import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlRootElement;
+import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
 
 import jakarta.xml.bind.annotation.XmlAccessType;
 import jakarta.xml.bind.annotation.XmlAccessorType;
-import jakarta.xml.bind.annotation.XmlElement;
-import jakarta.xml.bind.annotation.XmlRootElement;
 import lombok.Data;
 
-@Data
-@XmlRootElement(name = "apsRisposta")
-@XmlAccessorType(XmlAccessType.FIELD)
+@Data 
+@JacksonXmlRootElement(localName = "apsRisposta")
 public class CatastoResponse {
 
-    @XmlElement(name = "apsEsito")
-    private Esito esito;
-    @XmlElement(name = "apsDati")
+    @JacksonXmlProperty(localName = "apsEsito")
+    private Esito Esito;
+    @JacksonXmlProperty(localName = "apsDati")
     private Dati dati;
-    @XmlElement(name = "apsRichiesta")
+    @JacksonXmlProperty(localName =  "apsRichiesta")
     private Richiesta richiesta;
 
     @Data
-    @XmlAccessorType(XmlAccessType.FIELD)
     public static class Esito {
         
-        @XmlElement(name = "codice")
+        @JacksonXmlProperty(localName = "codice")
         private int codice;
-        @XmlElement(name = "descrizione")
+        @JacksonXmlProperty(localName = "descrizione")
         private String descrizione;
     }
 
     @Data
-    @XmlAccessorType(XmlAccessType.FIELD)
     public static class Dati {
     
-        @XmlElement(name = "idReport")
+        @JacksonXmlProperty(localName = "idReport")
         private String idReport;
-        @XmlElement(name = "aPar")
+        @JacksonXmlProperty(localName = "aPar")
         private Parametri aPar;
     }
 
     @Data
-    @XmlAccessorType(XmlAccessType.FIELD)
+
     public static class Parametri {
     
-        @XmlElement(name = "tiposogg")
+        @JacksonXmlProperty(localName = "tiposogg")
         private String tipoSogg;
-        @XmlElement(name = "codfisc")
+        @JacksonXmlProperty(localName = "codiFisc")
         private String codiceFisc;
     };
 
@@ -54,21 +50,23 @@ public class CatastoResponse {
     @XmlAccessorType(XmlAccessType.FIELD)
     public static class Richiesta {
 
-        @XmlElement(name = "numMovEC")
+        @JacksonXmlProperty(localName = "numMovEC")
         private String numMovEC;
-        @XmlElement(name = "dataOra")
-        private LocalDateTime dataOra;
-        @XmlElement(name = "url")
+        @JacksonXmlProperty(localName =  "dataOra")
+        private String dataOra;
+        @JacksonXmlProperty(localName =  "url")
         private String url;
-        @XmlElement(name = "ist")
+        @JacksonXmlProperty(localName =  "ist")
         private String ist;
-        @XmlElement(name = "usr")
+        @JacksonXmlProperty(localName =  "usr")
         private String usr;
-        @XmlElement(name = "prd")
+        @JacksonXmlProperty(localName =  "prodotto")
         private String prd;
-        @XmlElement(name = "tiposogg")
+        @JacksonXmlProperty(localName =  "tiposogg")
         private String tipoSogg;
-        @XmlElement(name = "codfisc")
+        @JacksonXmlProperty(localName =  "codifisc")
         private String codiceFisc;
+        @JacksonXmlProperty(localName =  "tipoxml")
+        private String tipoxml;
     }
 }

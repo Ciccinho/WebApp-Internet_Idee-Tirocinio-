@@ -31,12 +31,6 @@ export class AuthService {
     return this.http.get(urlAuth+'getAnagrafica/', { headers: header });
   }
 
-  getCatastoReport (token: String): Observable<any>{
-    console.log('token nel autService: ', token )
-    const header = new HttpHeaders({'Content-Type': 'application/json', 'Authorization':`Bearer ${token}`});
-    return this.http.post(urlRepo+'catastoSintetico',{headers: header , 'responseType':'blob'});
-  }
-
   getReport (token: string): Observable<Blob>{
     const header = new HttpHeaders({'Content-Type':'application/json'});
     return this.http.post(urlRepo+'catastoSintetico', `${token}` , {headers: header, responseType: 'blob'});

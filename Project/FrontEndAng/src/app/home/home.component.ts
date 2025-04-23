@@ -4,7 +4,6 @@ import { CommonModule } from '@angular/common';
 import { StorageService } from '../auth/storage.service';
 import { AnagraficaComponent } from '../entity/anagrafica/anagrafica.component';
 import { saveAs } from 'file-saver';
-import { buffer } from 'rxjs';
 import * as XLSX from 'xlsx';
 
 
@@ -42,10 +41,8 @@ export class HomeComponent implements OnInit{
     this.authService.getAnagraficaUser(this.token).subscribe({
       next: (data)=>{ 
         this.anagrafica = data;
-        console.log('data caricata in anagrafica', data);
         this.tipo = data.personaFisica;
         this.cf = data.codiceFiscale;
-        console.log('tipoSogg: ', this.tipo, ' cf: ', this.cf);
         this.showAnagrafica= true;
         this.errorMsg ='';
       },
@@ -62,13 +59,10 @@ export class HomeComponent implements OnInit{
   }  
 
   scaricaInfo():void {
-    console.log('dentro SCARICAINFO FRONT= token: ');
     this.authService.getReport(this.token).subscribe({  
       next: (response: Blob)=>{
         response.arrayBuffer().then( buffer =>{
-          console.log('Dimensione buffer:', buffer.byteLength);
           const workbook = XLSX.read( buffer, {type: 'array'});
-          console.log('Workbook valido con fogli:', workbook.SheetNames);
           const workBlob = XLSX.write(workbook, { bookType: 'xlsx', type: 'array' });
           const blob = new Blob ([workBlob],{ type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
           saveAs(blob,'repo_catasto.xlsx');

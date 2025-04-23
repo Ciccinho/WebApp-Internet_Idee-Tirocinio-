@@ -4,6 +4,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.dataformat.xml.XmlMapper;
 import com.fasterxml.jackson.module.jaxb.JaxbAnnotationModule;
@@ -15,7 +16,6 @@ import it.internetidee.AbbreCatSin.entity.Anagrafica;
 import lombok.RequiredArgsConstructor;
 
 import java.io.ByteArrayOutputStream;
-
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
@@ -61,7 +61,6 @@ public class CatastoSinteticoService {
         //     response.getRichiesta().setUsr("User");
         //     return response;
         // }
-        System.out.println("DENTRO Service");
         Anagrafica anagrafica = service.getAnagrafica(token);
         String codFisc = anagrafica.getCodiceFiscale();
         String tipoSog = new String();
@@ -79,9 +78,9 @@ public class CatastoSinteticoService {
             .queryParam("codiFisc", codFisc)
             .queryParam("tipoXml", "xml");
         String responseXml = restTemplate.getForObject(uriBilder.toUriString(), String.class);
-        System.out.println("RESPONSExml: "+responseXml);
         xmlMapper.registerModule(new JaxbAnnotationModule());
-        xmlMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+        xmlMapper.configure(DeserializationFeature.ACCEPT_EMPTY_STRING_AS_NULL_OBJECT, true);
+        xmlMapper.setDefaultPropertyInclusion(JsonInclude.Include.NON_NULL);
         return xmlMapper.readValue(responseXml, CatastoResponse.class);
         
     }
@@ -122,7 +121,7 @@ public class CatastoSinteticoService {
         headeRow.createCell(5).setCellValue("Prodotto");
         headeRow.createCell(6).setCellValue("Tipo Soggetto");
         headeRow.createCell(7).setCellValue("Codice Fiscale");
-        if(response.getRichiesta() != null){
+        if(response.getRichiesta()!= null){
             Row dataRow = sheet.createRow(numRow++);
             dataRow.createCell(0).setCellValue(response.getRichiesta().getNumMovEC());
             dataRow.createCell(1).setCellValue(response.getRichiesta().getDataOra());
